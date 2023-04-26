@@ -1,4 +1,4 @@
-const categories = {
+export const categories = {
     'amimals': [
         'Dog (Собака)',
         'Cat (Кошка)',

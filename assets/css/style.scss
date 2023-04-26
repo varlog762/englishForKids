@@ -6,7 +6,8 @@ p,
 h1,
 h2,
 h3,
-h4 {
+h4,
+figure {
     margin: 0;
     padding: 0;
 }
@@ -166,12 +167,102 @@ a {
     }
 }
 
-header button.switch.active:before {
-    opacity: 0;
-    transform: translate(-150%, -50%);
+.main {
+    .card-container {
+        padding: 60px 20px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 20px;
+        justify-content: center;
+        align-content: center;
+
+        .card {
+            max-width: 290px;
+            min-height: 320px;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid rgb(193, 192, 192);
+            transition: all 0.2s;
+            justify-self: center;
+
+            .card-figure {
+                width: 100%;
+                height: 100%;
+                
+                .card-img {
+                    display: block;
+                    margin-bottom: 20px;
+                    width: 100%;
+                }
+
+                .card-title {
+                    margin-left: 10px;
+                    margin-bottom: 20px;
+                    font-family: sans-serif;
+                    text-transform: uppercase;
+                    color: grey;
+                    font-weight: bold;
+                    letter-spacing: 0.2em;
+                }
+            }
+        }
+
+        .card:hover {
+            box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .card:active{
+            box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+        }
+    }
 }
 
-header button.switch.active:after {
-    opacity: 1;
-    transform: translate(-50%, -50%);
+@media screen and (width < 1200px) {
+    .main {
+
+        .card-container {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
 }
+
+@media screen and (width < 768px) {
+    .main {
+
+        .card-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}
+
+@media screen and (width < 600px) {
+    .header {
+        
+        .header__container{
+
+            .header__title {
+                display: none;
+            }
+        }
+    }
+    .main {
+
+        .card-container {
+            padding: 60px 15px;
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+}
+
+// header button.switch.active:before {
+//     opacity: 0;
+//     transform: translate(-150%, -50%);
+// }
+
+// header button.switch.active:after {
+//     opacity: 1;
+//     transform: translate(-50%, -50%);
+// }
+
