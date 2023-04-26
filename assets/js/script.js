@@ -1,5 +1,8 @@
 'use strict';
 
-const burgerBtn = document.querySelector('.burger-btn');
+import { showHideBurgerMenu } from "./functions.js";
 
-burgerBtn.addEventListener('click', () => akert('Hello!'));
+const burgerBtn = document.querySelector('.burger-btn'),
+    burgerMenuContainer = document.querySelector('.burger-menu-container');
+
+burgerBtn.addEventListener('click', () => showHideBurgerMenu(burgerMenuContainer, burgerBtn));
