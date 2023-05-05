@@ -1,13 +1,5 @@
 * {
     box-sizing: border-box;
-}
-
-p,
-h1,
-h2,
-h3,
-h4,
-figure {
     margin: 0;
     padding: 0;
 }
@@ -41,7 +33,7 @@ a {
             width: 40px;
             height: 40px;
             cursor: pointer;
-            z-index: 1;
+            z-index: 2;
 
             span {
                 display: block;
@@ -85,6 +77,7 @@ a {
             left: 0;
             top: 0;
             background-color: rgba($color: grey, $alpha: 0.6);
+            z-index: 1;
 
             .burger-menu {
                 position: absolute;
@@ -109,12 +102,12 @@ a {
                     letter-spacing: 0.2em;
                 }
 
-                .burger-menu-list-item:first-child a{
+                .burger-menu-list-item:first-child a {
                     margin-top: 20px;
                     font-weight: bold;
                 }
 
-                .burger-menu-list-item:last-child a{
+                .burger-menu-list-item:last-child a {
                     font-weight: bold;
                 }
 
@@ -132,63 +125,115 @@ a {
             margin: 0;
         }
 
-        .toggle-btn {
-            background-color: #ff8b8b;
-            border: none;
-            width: 80px;
-            height: 40px;
-            cursor: pointer;
-            margin-left: 20px;
-            border-radius: 20px;
+        .switch {
             position: relative;
-        }
+            display: inline-block;
+            width: 90px;
+            height: 40px;
+            margin: 20px;
 
-        .toggle-btn::before {
-            content: "LEFT";
-            color: #fff;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 16px;
-        }
+            .switch-checkbox {
+                display: none;
+            }
 
-        .toggle-btn::after {
-            content: "RIGHT";
-            color: #fff;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 16px;
-            opacity: 0;
-            transition: all 0.3s ease-in-out;
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                transition: .4s;
+                border-radius: 34px;
+
+                &::before {
+                    position: absolute;
+                    content: "";
+                    height: 32px;
+                    width: 32px;
+                    left: 4px;
+                    bottom: 4px;
+                    background-color: white;
+                    transition: .4s;
+                    border-radius: 50%;
+                }
+            }
+
+            .switch-checkbox:checked+.slider {
+                background-color: #ff8b8b;
+            }
+
+            .switch-checkbox:checked+.slider:before {
+                transform: translateX(50px);
+            }
+
+            .switch-label {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                font-family: sans-serif;
+                font-size: 18px;
+                color: #FFF;
+              }
+              
+              .train-mode {
+                display: none;
+                right: 10px;
+              }
+              
+              .play-mode {
+                display: none;
+                left: 10px;
+              }
+              
+              .active {
+                display: block;
+              }
         }
     }
 }
 
 .main {
+    background-color: rgba(220, 180, 50, 0.2);
+    height: 100%;
+
     .card-container {
-        padding: 60px 20px;
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 60px 10px;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        grid-gap: 20px;
+        grid-gap: 15px;
         justify-content: center;
         align-content: center;
 
         .card {
-            max-width: 290px;
-            min-height: 320px;
-            border-radius: 5px;
+            position: relative;
+            width: 290px;
+            height: 348px;
+            border-radius: 10px;
             overflow: hidden;
             border: 1px solid rgb(193, 192, 192);
             transition: all 0.2s;
             justify-self: center;
+            background-color: #FFF;
+            cursor: pointer;
+
+            &:hover {
+                box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+                transform: translateY(-5px);
+            }
+
+            &:active {
+                box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.3);
+
+            }
 
             .card-figure {
                 width: 100%;
                 height: 100%;
-                
+
                 .card-img {
                     display: block;
                     margin-bottom: 20px;
@@ -196,7 +241,7 @@ a {
                 }
 
                 .card-title {
-                    margin-left: 10px;
+                    margin-left: 20px;
                     margin-bottom: 20px;
                     font-family: sans-serif;
                     text-transform: uppercase;
@@ -207,14 +252,51 @@ a {
             }
         }
 
-        .card:hover {
-            box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
+        .card-word {
+
+            .card-word-front-side,
+            .card-word-back-side {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                position: absolute;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                transition: transform .5s ease;
+            }
+
+            .card-word-front-side {
+                transform: perspective(600px) rotateY(0);
+
+                .card-rotate-btn {
+                    width: 40px;
+                    height: 24px;
+                    position: absolute;
+                    bottom: 20px;
+                    right: 20px;
+                    border: none;
+                    background: url('../icons/rotate-arrow.png') no-repeat center center/contain;
+                }
+            }
+
+            .card-word-back-side {
+                transform: perspective(600px) rotateY(180deg);
+
+                img {
+                    transform: scaleX(-1);
+                }
+            }
+
         }
 
-        .card:active{
-            box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.3);
-            transform: translateY(-5px);
+        .card-reverse {
+            .card-word-front-side {
+                transform: perspective(600px) rotateY(-180deg);
+            }
+
+            .card-word-back-side {
+                transform: perspective(600px) rotateY(0);
+            }
         }
     }
 }
@@ -239,14 +321,15 @@ a {
 
 @media screen and (width < 600px) {
     .header {
-        
-        .header__container{
+
+        .header__container {
 
             .header__title {
                 display: none;
             }
         }
     }
+
     .main {
 
         .card-container {
@@ -265,4 +348,3 @@ a {
 //     opacity: 1;
 //     transform: translate(-50%, -50%);
 // }
-
